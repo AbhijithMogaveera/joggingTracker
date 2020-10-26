@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">RunTrackerFitness</string>
+    <string name="running_app">Running App</string>
+    <string name="your_runs">Your Runs</string>
+    <string name="statistics">statistics</string>
+    <string name="settings">settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string-array name="filter_options">
+        <item>Date</item>
+        <item>Running Time</item>
+        <item>Distance</item>
+        <item>Average Speed</item>
+        <item>Calories Burned</item>
+    </string-array>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sort_by">Sort by:</string>
+    <string name="welcome_nplease_enter_your_name_and_weight">Welcome!\nPlease enter your name and weight.</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="duration">DURATION</string>
+    <string name="avg_speed">AVG SPEED</string>
+    <string name="distance">DISTANCE</string>
+    <string name="calories_burned">CALORIES BURNED</string>
+    <string name="date">DATE</string>
+    <string name="total_distance">Total Distance</string>
+    <string name="_0km">0km</string>
+    <string name="total_time">Total Time</string>
+    <string name="_00_00_00">00:00:00</string>
+    <string name="_0kcal">0kcal</string>
+    <string name="total_calories_burned">Total Calories Burned</string>
+    <string name="average_speed">Average Speed</string>
+    <string name="_0km_h">0km/h</string>
+</resources>
