@@ -26,15 +26,14 @@ BaseApplication : Application() {
     }
 
     companion object {
-
         /*never use for other then DI*/
         lateinit var me: BaseApplication
     }
 
     override fun onCreate() {
         super.onCreate()
+        me = this@BaseApplication
         Timber.plant(Timber.DebugTree())
-        me = this
     }
 
     private fun init(): RunningAppComponent = DaggerRunningAppComponent.factory().build(this, this)

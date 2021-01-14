@@ -30,4 +30,5 @@
     <string name="total_calories_burned">Total Calories Burned</string>
     <string name="average_speed">Average Speed</string>
     <string name="_0km_h">0km/h</string>
+    <string name="google_maps_key">AIzaSyDjTjnvwgdbmQ43ulJ1PDsJ9ex5ApE5TMg</string>
 </resources>

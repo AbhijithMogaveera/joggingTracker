@@ -42,7 +42,7 @@ class FragmentTracking : Fragment(R.layout.fragment_tracking) {
     @set:Inject
     var weight: Float = 80f
 
-    private var map: GoogleMap? = null
+    private lateinit  var map: GoogleMap
 
     private var isTracking = false
     private var curTimeInMillis = 0L
@@ -65,6 +65,7 @@ class FragmentTracking : Fragment(R.layout.fragment_tracking) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val mapViewBundle = savedInstanceState?.getBundle(MAP_VIEW_BUNDLE_KEY)
         BaseApplication.me.startConsumingFromFragmentModule(this)
 
@@ -73,8 +74,7 @@ class FragmentTracking : Fragment(R.layout.fragment_tracking) {
         // restore dialog instance
 
         if (savedInstanceState != null) {
-            val cancelRunDialog =
-                parentFragmentManager.findFragmentByTag(CANCEL_DIALOG_TAG) as CancelRunDialog?
+            val cancelRunDialog = parentFragmentManager.findFragmentByTag(CANCEL_DIALOG_TAG) as CancelRunDialog?
             cancelRunDialog?.setYesListener {
                 stopRun()
             }
@@ -90,9 +90,10 @@ class FragmentTracking : Fragment(R.layout.fragment_tracking) {
         }
 
         mapView.getMapAsync {
-            map = it
+            map = it!!
             addAllPolylines()
         }
+
         subscribeToObservers()
     }
 
@@ -104,8 +105,11 @@ class FragmentTracking : Fragment(R.layout.fragment_tracking) {
         Toast.makeText(context, "hello", Toast.LENGTH_SHORT).show()
 
         val call = object : TrackingService.CallBack{
+
             override fun onTrackingStateChanged(state: Boolean) {
+                if(btnToggleRun!=null)
                 updateTracking(state)
+
             }
 
             override fun onNewPathPoints(polyLines: PolyLines) {
@@ -146,7 +150,7 @@ class FragmentTracking : Fragment(R.layout.fragment_tracking) {
      */
     private fun moveCameraToUser() {
         if (pathPoints.isNotEmpty() && pathPoints.last().isNotEmpty()) {
-            map?.animateCamera(
+            map.animateCamera(
                 CameraUpdateFactory.newLatLngZoom(
                     pathPoints.last().last(),
                     MAP_ZOOM
@@ -164,7 +168,7 @@ class FragmentTracking : Fragment(R.layout.fragment_tracking) {
                 .color(POLYLINE_COLOR)
                 .width(POLYLINE_WIDTH)
                 .addAll(polyline)
-            map?.addPolyline(polylineOptions)
+            map.addPolyline(polylineOptions)
         }
     }
 
@@ -182,7 +186,7 @@ class FragmentTracking : Fragment(R.layout.fragment_tracking) {
                 .add(preLastLatLng)
                 .add(lastLatLng)
 
-            map?.addPolyline(polylineOptions)
+            map.addPolyline(polylineOptions)
         }
     }
 
@@ -275,7 +279,7 @@ class FragmentTracking : Fragment(R.layout.fragment_tracking) {
         val height = mapView.height
 
         try {
-            map?.moveCamera(
+            map.moveCamera(
                 CameraUpdateFactory.newLatLngBounds(
                     bounds.build(),
                     width,
@@ -293,7 +297,9 @@ class FragmentTracking : Fragment(R.layout.fragment_tracking) {
      * Saves the recent run in the Room database and ends it
      */
     private fun endRunAndSaveToDB() {
-        map?.snapshot { bmp ->
+        Toast.makeText(this.context, "abhi 3", Toast.LENGTH_SHORT).show()
+        map.snapshot { bmp ->
+            Toast.makeText(this.context, "abhi 1", Toast.LENGTH_SHORT).show()
             var distanceInMeters = 0
             for (polyline in pathPoints) {
                 distanceInMeters += TrackingUtility.calculatePolylineLength(polyline).toInt()
@@ -305,6 +311,7 @@ class FragmentTracking : Fragment(R.layout.fragment_tracking) {
             val run =
                 Run(bmp, timestamp, avgSpeed, distanceInMeters, curTimeInMillis, caloriesBurned)
             viewModel.insertRun(run)
+            Toast.makeText(this.context, "abhi 2", Toast.LENGTH_SHORT).show()
             Snackbar.make(
                 requireActivity().findViewById(R.id.rootView),
                 "Run saved successfully.",
@@ -321,6 +328,7 @@ class FragmentTracking : Fragment(R.layout.fragment_tracking) {
         Timber.d("STOPPING RUN")
         tvTimer.text = "00:00:00:00"
         stopTrackingService()
+        Toast.makeText(this.context, "abhi", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_trackingFragment_to_runFragment2)
     }
 
