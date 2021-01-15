@@ -4,7 +4,6 @@
     <string name="your_runs">Your Runs</string>
     <string name="statistics">statistics</string>
     <string name="settings">settings</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string-array name="filter_options">
         <item>Date</item>
         <item>Running Time</item>
